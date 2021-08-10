@@ -5,7 +5,7 @@
 
 코드 소개 : 
 
-    flowerengine.ipynb = 검색어와 가장 유사한 꽃 찾기.
+    flowerengine.ipynb = 검색어와 꽃 사이의 유사도 높은 순 정렬
     mysqlsearch.ipynb = mysql연결 및 상품리스트의 키워드(가격, 꽃, 색 등)와 검색어 직접 비교해 가장 유사한 상품 순 정렬.
     mysqlorderprice.ipynb = mysql연결 및 이용자 구매내역 뽑아서 가격 가중평균 구하기.
     mysqlflowersearch.ipynb = mysql연결 및 상품리스트중 flowerengine결과와 일치하는 꽃 뽑기.
@@ -14,7 +14,7 @@
 
 앞으로 해야할 일 :
 
-    유사한 꽃 찾기기능 여러 꽃 뽑게 하기
+    가격기준 꽃 추천 기능 제작
     백엔드 데베에 맞게 수정
     코드 통합
     기타등등...
