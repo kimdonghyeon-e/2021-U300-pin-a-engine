@@ -11,11 +11,13 @@
     mysqlflowersearch.ipynb = mysql연결 및 상품리스트중 flowerengine결과와 일치하는 꽃 뽑기.
     nearprice.ipynb = 가중평균 +-10% 사이 가격 상품 뽑기.
     orderprice.ipynb = mysqlorderprice.ipynb의 몽고db버전.
+    multiprocesstest.py = 멀티프로세스 테스트용
 
 
 앞으로 해야할 일 :
 
     백엔드 데베에 맞게 수정
     코드 통합
+    자식프로세스활용
     기타등등...
     
