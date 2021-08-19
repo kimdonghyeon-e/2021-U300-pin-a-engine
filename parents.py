@@ -3,12 +3,14 @@ import subprocess
 import json
 import time
 import pymysql
+from multiprocessing import Process
+
+# r, w = os.pipe
 
 class SubprocessTest :
     def __init__(self) :
         program = r"/Users/gimdonghyeon/Documents/GitHub/2021-U300-pin-a-engine/child.py"
         pro = subprocess.Popen(["python", program], stdin=subprocess.PIPE, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        # stdout, stderr = pro.communicate()
         print("child run success!")
 
         db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
@@ -20,6 +22,8 @@ class SubprocessTest :
         print(last)
 
         while(True) :
+            db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
+            cusor = db.cursor()
             query = "select * from search"
             cusor.execute(query)
             result = cusor.fetchall()
@@ -39,13 +43,16 @@ class SubprocessTest :
                 data = str(result[last][0]).encode()
                 pro.stdin.write(data)
                 time.sleep(0.1)
-                stdout, stderr = pro.communicate()
                 print(stdout.decode('utf-8'))
 
                 wfile = open('/Users/gimdonghyeon/Documents/GitHub/2021-U300-pin-a-engine/lastsearch.txt', 'w')
                 wfile.write(str(result[last][0]))
                 last = int(result[last][0])
-
+            # print('ct')
+            # data = 'hi'.encode()
+            # pro.stdin.write(data)
+            # time.sleep(0.1)
+            pro.poll()
             time.sleep(0.5)
             
 
