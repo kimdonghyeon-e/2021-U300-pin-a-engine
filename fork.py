@@ -10,6 +10,67 @@ from gensim.models import word2vec
 model = gensim.models.word2vec.Word2Vec.load('newwiki.model')
 word_vectors = model.wv
 
+##꽃 리스트 추가
+flower = ['갈대',
+          '강아지풀', '개나리', '개망초', 
+          '개양귀비', '갯버들',
+          '공작초', '과꽃',
+          '국화', '군자란', 
+          '극락조화', '글록시니아', 
+          '금낭화', '금목서', '금어초', '금잔화', '금작화', '기린초', '기생꽃', 
+          '꽃잔디', '꽃창포', '꽈리', 
+          '나팔꽃', '난초', '남천', '냉이', '넌출월귤', 
+          '노루귀', 
+          '능소화', '달리아', '달맞이꽃', 
+          '담배',  
+          '데이지', '도꼬마리', '도라지꽃', 
+          '동백꽃', '독말풀', '둥글레', '들국화',
+          '다알리아', 
+          '라벤더', '라임', '라일락', '레몬',  
+          '로즈마리', '로즈힙', 
+          '루드베키아', '마가렛', '마로니에', 
+          '마타리', '마시멜로', '만수국', '망초', '맨드라미', 
+          '머위', '모란', '목련', '목향', '목화', '몬스테라', 
+          '무궁화', '문주란', '물망초', '미나리', 
+          '미나리아재비', '미모사', '민들레', '민트', 
+          '바이올렛', '제비꽃', 
+          '밤안개', '방울꽃', '배꽃', '백목련', '백일홍', '백합', 
+          '벌개미취', '벚꽃', '베고니아', '보리', 
+          '보리수', '봄맞이꽃', '봉선화', '부용', '부추', '분꽃', '붓꽃', 
+          '빈카', '반다', '사루비아', 
+          '사프란', '산나리', '산당화', '산딸기',
+          '산세베리아', '산수유', '상사화', 
+          '석류', '석산', '피안화', '꽃무릇', '선인장', 
+          '세이지', '소철', '송엽국', 
+          '수국', '수련', '수레국화', '센트레아', '수선화', '스노드롭', '스위트피',  
+          '스타티스', 
+          '아네모네',
+          '아마', '아마릴리스', '아스타', '아스파라거스', 
+          '아카시아', '안개꽃', 
+          '앵초', '연근', '연꽃', '에델바이스', 
+          '어성초', '억새', '엉겅퀴', 
+          '양귀비', '양치', '영산홍', '오레가노', '오렌지', '오이풀', '옥수수', 
+          '용담', '우엉', '유채꽃', '유칼립투스',  
+          '으름덩굴', '은매화', '은방울꽃',
+          '인디고', '일일초', '홍화', 
+          '장미', '자스민', '제비꽃', '접시꽃', '제라늄', '진달래', 
+          '자양화', '찔레꽃', 
+          '작약', '창포', '채송화', '천일홍', 
+          '철쭉', '칸나', '칼라', 
+          '코스모스', '크로커스', '크랜베리', '카네이션', '코키아', '코리앤더', 
+          '카사블랑카', '투구꽃', '튤립',
+          '패랭이꽃', '팬지', '팽나무', '페퍼민트', 
+          '프리지아', 
+          '플라타너스', '해바라기', 
+          '헬리오트롭', '헬리오트로프', '현호색', '협죽도', 
+          '홉',  
+          '히비스커스']
+
+##꽃마다 유사도 메기기 위한 리스트. [][0]에는 유사도, [][1]에는 꽃이름
+flowerscore = [[0]*2 for i in range(len(flower))]
+for flowerlist in range(len(flower)) :
+    flowerscore[flowerlist][1] = flower[flowerlist]
+
 ##파이프라인 선언
 r, w = os.pipe()
 
@@ -55,6 +116,35 @@ while(True) :
                 # time.sleep(10)
                 # print("자식")
                 ##여기에 검색엔진 돌아갈 코드 입력하면 됨
+
+                ##mysql로 입력받은 검색어 저장 및 형태소분리(여기부터 안돌려봄)
+                searchword = result[last+forkloop+1][2]
+                print("검색어 : ", searchword)
+                malist = okt.pos(searchword, norm=True, stem=True)
+                print("분리된 형태소 : ", malist)
+
+                ##형태소 일부 전처리 및 '*색'키워드 분리
+                colorlist = list(range(0))
+                searchkeyword = list(range(0))
+                for listloop in range(len(malist)) :
+                    if "색" in malist[listloop][0] :
+                        olorlist.insert(listloop, malist[listloop][0])
+                    if not malist[listloop][1] in ["Josa", "Eomi", "Punctuation", "Alpha", "KoreanParticle"]:
+                        flname = malist[listloop][0]
+                        searchkeyword.insert(listloop, flname) 
+                print("색 키워드 : ", colorlist)
+                print("전처리된 검색어들 : ", searchkeyword)
+
+                ##유사도 리스트에 입력
+                import gensim
+                word_vectors = model.wv
+                nearkeyword = model.wv.most_similar(positive=searchkeyword, negative=[])
+                for i in range(0, len(flower), 1) :
+                    flowerscore[i][0] = word_vectors.similarity(w1=nearkeyword[0][0], w2=flower[i])
+
+                ##유사도 내림차순 정렬
+                sortflower = sorted(flowerscore, key = lambda x : -x[0])
+                print("꽃 유사도 : ", sortflower)
 
                 ##자식프로세스가 추가적인 자식프로세스 열지못하도록 종료
                 exit()
