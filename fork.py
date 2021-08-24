@@ -136,8 +136,6 @@ while(True) :
                 print("전처리된 검색어들 : ", searchkeyword)
 
                 ##유사도 리스트에 입력
-                import gensim
-                word_vectors = model.wv
                 nearkeyword = model.wv.most_similar(positive=searchkeyword, negative=[])
                 for i in range(0, len(flower), 1) :
                     flowerscore[i][0] = word_vectors.similarity(w1=nearkeyword[0][0], w2=flower[i])
@@ -145,6 +143,43 @@ while(True) :
                 ##유사도 내림차순 정렬
                 sortflower = sorted(flowerscore, key = lambda x : -x[0])
                 print("꽃 유사도 : ", sortflower)
+
+                ##mysql접속해서 상품테이블 리스트 받아오기(presult)
+                pdb = pymysql.Connect(hst='localhost', user='root', password='ROOTuser1234', database='fdtest')
+                pcusor = pdb.connect
+                pquery = "select * from price"
+                pcusor.execute(pquery)
+                presult = pcusor.fetchall()
+
+                ##데이터마다 점수 메기기 위한 리스트. [][0]에는 점수, [][1]에는 상품번호
+                tablescore = [[0]*2 for i in range(len(presult))]
+                for makelist in range(len(presult)) :
+                    tablescore[makelist][1] = presult[makelist][0]
+
+                ##mysql검색루프(유사도검색 꽃 순위별 5~1점 제공, 단순비교검색 각각 1점 제공, 가격유사시 1점 제공(아직 데베 어떻게될지몰라서 이건 구현안함))
+                for tableloop in range(len(presult)) :
+                    for flowerfind in range(5) :
+                        if sortflower[flowerfind][1] == presult[tableloop][9] :
+                            if flowerfind == 0 :
+                                tablescore[tableloop][0] += 5
+                            elif flowerfind == 1 :
+                                tablescore[tableloop][0] += 4
+                            elif flowerfind == 2 :
+                                tablescore[tableloop][0] += 3
+                            elif flowerfind == 3 :
+                                tablescore[tableloop][0] += 2
+                            else :
+                                tablescore[tableloop][0] += 1
+                    for keywordloop in range(len(searchkeyword)) :
+                        for searchloop in range(len(presult[0])) :
+                            if searchkeyword[keywordloop] == result[tableloop][searchloop] :
+                                tablescore[tableloop][0] += 1
+
+                ##검색루프 돌아서 점수만든거 내림차순정렬
+                sorttable = sorted(tablescore, key = lambda x : -x[0])
+                print(sorttable)
+
+                ##이제 이거를 어떻게 백엔드에주지,,?
 
                 ##자식프로세스가 추가적인 자식프로세스 열지못하도록 종료
                 exit()
