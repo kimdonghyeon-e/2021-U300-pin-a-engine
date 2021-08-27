@@ -78,7 +78,7 @@ r, w = os.pipe()
 lastsearchfile = open('/Users/gimdonghyeon/Documents/GitHub/2021-U300-pin-a-engine/lastsearch.txt', 'r')
 lastsearch = lastsearchfile.readlines()
 last = int(lastsearch[0])
-# print("저번서치끝 ", last)
+print("저번서치끝 ", last)
 
 ##무한루프, 서치테이블에 추가된 데이터 있는지 검사
 while(True) :
@@ -128,7 +128,7 @@ while(True) :
                 searchkeyword = list(range(0))
                 for listloop in range(len(malist)) :
                     if "색" in malist[listloop][0] :
-                        olorlist.insert(listloop, malist[listloop][0])
+                        colorlist.insert(listloop, malist[listloop][0])
                     if not malist[listloop][1] in ["Josa", "Eomi", "Punctuation", "Alpha", "KoreanParticle"]:
                         flname = malist[listloop][0]
                         searchkeyword.insert(listloop, flname) 
