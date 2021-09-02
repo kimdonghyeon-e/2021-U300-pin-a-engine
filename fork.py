@@ -80,15 +80,17 @@ lastsearch = lastsearchfile.readlines()
 last = int(lastsearch[0])
 print("저번서치끝 ", last)
 
+##DB연결
+db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
+cusor = db.cursor()
+
 ##무한루프, 서치테이블에 추가된 데이터 있는지 검사
 while(True) :
     time.sleep(0.5)
 
     # print(last)
 
-    ##DB에 연결 및 계속 쿼리 질의
-    db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
-    cusor = db.cursor()
+    ##DB에 계속 쿼리 질의
     query = "select * from search"
     cusor.execute(query)
     result = cusor.fetchall()
@@ -117,13 +119,14 @@ while(True) :
                 # print("자식")
                 ##여기에 검색엔진 돌아갈 코드 입력하면 됨
 
-                ##mysql로 입력받은 검색어 저장 및 형태소분리(여기부터 안돌려봄)
-                searchword = result[last+forkloop+1][2]
+                ##mysql로 입력받은 검색어 저장 및 형태소분리
+                print(result[last+forkloop][2])
+                searchword = result[last+forkloop][2]
                 print("검색어 : ", searchword)
                 malist = okt.pos(searchword, norm=True, stem=True)
                 print("분리된 형태소 : ", malist)
 
-                ##형태소 일부 전처리 및 '*색'키워드 분리
+                ##형태소 일부 전처리 및 '*색'키워드 분리(이부분에서 오류있음)
                 colorlist = list(range(0))
                 searchkeyword = list(range(0))
                 for listloop in range(len(malist)) :
