@@ -103,7 +103,7 @@ while(True) :
     # print("현재서치끝 ", size)
 
     ##만약 서치테이블에 추가된 데이터 있으면
-    if size > last :
+    if size > last+1 :
 
         ##해당 추가된 데이터만큼 포크
         for forkloop in range(size - last) :
