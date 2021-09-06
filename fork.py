@@ -1,3 +1,4 @@
+##mysql검색 넘버는 1부터 시작하기(search테이블의 no는 1부터)
 import os
 import time
 import pymysql
