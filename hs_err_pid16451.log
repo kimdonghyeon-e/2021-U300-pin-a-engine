@@ -1,0 +1,126 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (heapRegionManager.cpp:54), pid=16451, tid=771
+#  guarantee(Thread::current()->is_VM_thread() || FreeList_lock->owned_by_self()) failed: master free list MT safety protocol at a safepoint
+#
+# JRE version: Java(TM) SE Runtime Environment (16.0.1+9) (build 16.0.1+9-24)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (16.0.1+9-24, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, bsd-amd64)
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dfile.encoding=UTF8 -ea -Xmx1024m 
+
+Host: iMac19,2 x86_64 3600 MHz, 4 cores, 8G, Darwin 20.6.0, macOS 11.5.2 (20G95)
+Time: Mon Sep  6 11:17:58 2021 KST elapsed time: 561.772007 seconds (0d 0h 9m 21s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fc512844e00):  JavaThread "main" [_thread_in_vm, id=259, stack(0x00007ffeed79f000,0x00007ffeee79f000)]
+
+Stack: [0x00007ffeed79f000,0x00007ffeee79f000],  sp=0x00007ffeee79ca50,  free space=16374k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.dylib+0xa7b0a5]  _ZN7VMError14report_and_dieEiPKcS1_P13__va_list_tagP6ThreadPhPvS7_S1_im+0x695
+V  [libjvm.dylib+0xa7b65b]  _ZN7VMError14report_and_dieEP6ThreadPvPKciS4_S4_P13__va_list_tag+0x3b
+V  [libjvm.dylib+0x34f757]  _Z15report_vm_errorPKciS0_S0_z+0xa7
+V  [libjvm.dylib+0x4ca3bc]  _ZN27MasterFreeRegionListChecker15check_mt_safetyEv+0x5c
+V  [libjvm.dylib+0x4c8134]  _ZN17HeapRegionManager20allocate_free_regionE14HeapRegionTypej+0x154
+V  [libjvm.dylib+0x4090f6]  _ZN15G1CollectedHeap24new_mutator_alloc_regionEmbj+0x46
+V  [libjvm.dylib+0x3eeef7]  _ZN13G1AllocRegion29new_alloc_region_and_allocateEmb+0x17
+V  [libjvm.dylib+0x3fefe2]  _ZN15G1CollectedHeap23attempt_allocation_slowEm+0x92
+V  [libjvm.dylib+0x3fea2a]  _ZN15G1CollectedHeap17allocate_new_tlabEmmPm+0x3a
+V  [libjvm.dylib+0x808643]  _ZNK12MemAllocator25allocate_inside_tlab_slowERNS_10AllocationE+0x213
+V  [libjvm.dylib+0x8087dc]  _ZNK12MemAllocator8allocateEv+0x8c
+V  [libjvm.dylib+0x4e7261]  _ZN13InstanceKlass17allocate_instanceEP6Thread+0x41
+V  [libjvm.dylib+0x2594cd]  _ZN8Runtime112new_instanceEP10JavaThreadP5Klass+0xbd
+v  ~RuntimeStub::fast_new_instance Runtime1 stub
+J 660 c1 jdk.internal.jrtfs.JrtPath.getFileName()Ljdk/internal/jrtfs/JrtPath; java.base@16.0.1 (78 bytes) @ 0x000000010d21e704 [0x000000010d21e320+0x00000000000003e4]
+J 659 c1 jdk.internal.jrtfs.JrtFileSystem.lambda$iteratorOf$2(Ljdk/internal/jrtfs/JrtPath;Ljdk/internal/jimage/ImageReader$Node;)Ljava/nio/file/Path; java.base@16.0.1 (20 bytes) @ 0x000000010d21ddcc [0x000000010d21dc60+0x000000000000016c]
+J 658 c1 jdk.internal.jrtfs.JrtFileSystem$$Lambda$26+0x0000000800c65930.apply(Ljava/lang/Object;)Ljava/lang/Object; java.base@16.0.1 (16 bytes) @ 0x000000010d21d8ec [0x000000010d21d840+0x00000000000000ac]
+J 397 c1 java.util.stream.ReferencePipeline$3$1.accept(Ljava/lang/Object;)V java.base@16.0.1 (23 bytes) @ 0x000000010d1b04e4 [0x000000010d1b03c0+0x0000000000000124]
+J 641 c1 java.util.ArrayList$ArrayListSpliterator.tryAdvance(Ljava/util/function/Consumer;)Z java.base@16.0.1 (79 bytes) @ 0x000000010d217bbc [0x000000010d217980+0x000000000000023c]
+J 651 c1 java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.fillBuffer()Z java.base@16.0.1 (64 bytes) @ 0x000000010d216c94 [0x000000010d216820+0x0000000000000474]
+J 650 c1 java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.doAdvance()Z java.base@16.0.1 (106 bytes) @ 0x000000010d21b62c [0x000000010d21afe0+0x000000000000064c]
+J 649 c1 java.util.stream.StreamSpliterators$WrappingSpliterator.tryAdvance(Ljava/util/function/Consumer;)Z java.base@16.0.1 (36 bytes) @ 0x000000010d21a7f4 [0x000000010d21a700+0x00000000000000f4]
+J 646 c1 java.util.Spliterators$1Adapter.hasNext()Z java.base@16.0.1 (23 bytes) @ 0x000000010d218c94 [0x000000010d218b40+0x0000000000000154]
+J 648 c1 jdk.internal.jrtfs.JrtDirectoryStream$1.hasNext()Z java.base@16.0.1 (41 bytes) @ 0x000000010d21a224 [0x000000010d21a060+0x00000000000001c4]
+j  org.jpype.pkg.JPypePackageManager.collectContents(Ljava/util/Map;Ljava/nio/file/Path;)V+11
+j  org.jpype.pkg.JPypePackageManager.getModuleContents(Ljava/util/Map;Ljava/lang/String;)V+111
+j  org.jpype.pkg.JPypePackageManager.getContentMap(Ljava/lang/String;)Ljava/util/Map;+29
+j  org.jpype.pkg.JPypePackage.<init>(Ljava/lang/String;)V+11
+j  org.jpype.JPypeContext.getPackage(Ljava/lang/String;)Lorg/jpype/pkg/JPypePackage;+19
+v  ~StubRoutines::call_stub
+V  [libjvm.dylib+0x508442]  _ZN9JavaCalls11call_helperEP9JavaValueRK12methodHandleP17JavaCallArgumentsP6Thread+0x2d2
+V  [libjvm.dylib+0x564c36]  _ZL20jni_invoke_nonstaticP7JNIEnv_P9JavaValueP8_jobject11JNICallTypeP10_jmethodIDP18JNI_ArgumentPusherP6Thread+0x2d6
+V  [libjvm.dylib+0x568a77]  jni_CallObjectMethodA+0xf7
+C  [_jpype.cpython-38-darwin.so+0x219e9]  _ZN11JPJavaFrame10getPackageERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+0x39
+C  [_jpype.cpython-38-darwin.so+0x47eed]  _ZL10getPackageR11JPJavaFrameP7_object+0xdd
+C  [_jpype.cpython-38-darwin.so+0x476d1]  _ZL20PyJPPackage_getattroP7_objectS0_+0x1c1
+C  [python3+0x91d80]  _PyObject_GetMethod+0x1c0
+C  [python3+0x164cee]  _PyEval_EvalFrameDefault+0xadde
+C  [python3+0x15812d]  _PyEval_EvalCodeWithName+0x22d
+C  [python3+0x2f19a]  _PyFunction_Vectorcall+0x1aa
+C  [python3+0x32d1d]  method_vectorcall+0x8d
+C  [python3+0x16555d]  _PyEval_EvalFrameDefault+0xb64d
+C  [python3+0x15812d]  _PyEval_EvalCodeWithName+0x22d
+C  [python3+0x1d0346]  PyRun_FileExFlags+0x166
+C  [python3+0x1cfa91]  PyRun_SimpleFileExFlags+0x211
+C  [python3+0x1f82df]  pymain_run_file+0x17f
+C  [python3+0x1f79ab]  pymain_run_python+0x20b
+C  [python3+0x1f7745]  Py_RunMain+0x25
+C  [python3+0x1f8e11]  pymain_main+0x31
+C  [python3+0x1768]  main+0x38
+C  [libdyld.dylib+0x15f3d]  start+0x1
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+v  ~RuntimeStub::fast_new_instance Runtime1 stub
+J 660 c1 jdk.internal.jrtfs.JrtPath.getFileName()Ljdk/internal/jrtfs/JrtPath; java.base@16.0.1 (78 bytes) @ 0x000000010d21e704 [0x000000010d21e320+0x00000000000003e4]
+J 659 c1 jdk.internal.jrtfs.JrtFileSystem.lambda$iteratorOf$2(Ljdk/internal/jrtfs/JrtPath;Ljdk/internal/jimage/ImageReader$Node;)Ljava/nio/file/Path; java.base@16.0.1 (20 bytes) @ 0x000000010d21ddcc [0x000000010d21dc60+0x000000000000016c]
+J 658 c1 jdk.internal.jrtfs.JrtFileSystem$$Lambda$26+0x0000000800c65930.apply(Ljava/lang/Object;)Ljava/lang/Object; java.base@16.0.1 (16 bytes) @ 0x000000010d21d8ec [0x000000010d21d840+0x00000000000000ac]
+J 397 c1 java.util.stream.ReferencePipeline$3$1.accept(Ljava/lang/Object;)V java.base@16.0.1 (23 bytes) @ 0x000000010d1b04e4 [0x000000010d1b03c0+0x0000000000000124]
+J 641 c1 java.util.ArrayList$ArrayListSpliterator.tryAdvance(Ljava/util/function/Consumer;)Z java.base@16.0.1 (79 bytes) @ 0x000000010d217bbc [0x000000010d217980+0x000000000000023c]
+J 651 c1 java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.fillBuffer()Z java.base@16.0.1 (64 bytes) @ 0x000000010d216c94 [0x000000010d216820+0x0000000000000474]
+J 650 c1 java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.doAdvance()Z java.base@16.0.1 (106 bytes) @ 0x000000010d21b62c [0x000000010d21afe0+0x000000000000064c]
+J 649 c1 java.util.stream.StreamSpliterators$WrappingSpliterator.tryAdvance(Ljava/util/function/Consumer;)Z java.base@16.0.1 (36 bytes) @ 0x000000010d21a7f4 [0x000000010d21a700+0x00000000000000f4]
+J 646 c1 java.util.Spliterators$1Adapter.hasNext()Z java.base@16.0.1 (23 bytes) @ 0x000000010d218c94 [0x000000010d218b40+0x0000000000000154]
+J 648 c1 jdk.internal.jrtfs.JrtDirectoryStream$1.hasNext()Z java.base@16.0.1 (41 bytes) @ 0x000000010d21a224 [0x000000010d21a060+0x00000000000001c4]
+j  org.jpype.pkg.JPypePackageManager.collectContents(Ljava/util/Map;Ljava/nio/file/Path;)V+11
+j  org.jpype.pkg.JPypePackageManager.getModuleContents(Ljava/util/Map;Ljava/lang/String;)V+111
+j  org.jpype.pkg.JPypePackageManager.getContentMap(Ljava/lang/String;)Ljava/util/Map;+29
+j  org.jpype.pkg.JPypePackage.<init>(Ljava/lang/String;)V+11
+j  org.jpype.JPypeContext.getPackage(Ljava/lang/String;)Lorg/jpype/pkg/JPypePackage;+19
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007fc5138733a0, length=14, elements={
+0x00007fc512844e00, 0x00007fc514253600, 0x00007fc514255e00, 0x00007fc514253c00,
+0x00007fc5130cfa00, 0x00007fc5130c6000, 0x00007fc512845a00, 0x00007fc5120b2c00,
+0x00007fc514254e00, 0x00007fc5130e4e00, 0x00007fc514255400, 0x00007fc514259e00,
+0x00007fc514384600, 0x00007fc51294d200
+}
+
+Java Threads: ( => current thread )
+=>0x00007fc512844e00 JavaThread "main" [_thread_in_vm, id=259, stack(0x00007ffeed79f000,0x00007ffeee79f000)]
+  0x00007fc514253600 JavaThread "Reference Handler" daemon [_thread_blocked, id=14083, stack(0x000070000ad8d000,0x000070000ae8d000)]
+  0x00007fc514255e00 JavaThread "Finalizer" daemon [_thread_blocked, id=14595, stack(0x000070000ae90000,0x000070000af90000)]
+  0x00007fc514253c00 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=16387, stack(0x000070000b11c000,0x000070000b21c000)]
+  0x00007fc5130cfa00 JavaThread "Service Thread" daemon [_thread_blocked, id=16899, stack(0x000070000b21f000,0x000070000b31f000)]
+  0x00007fc5130c6000 JavaThread "Monitor Deflation Thread" daemon [_thread_blocked, id=21763, stack(0x000070000b322000,0x000070000b422000)]
+  0x00007fc512845a00 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=22019, stack(0x000070000b425000,0x000070000b525000)]
+  0x00007fc5120b2c00 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=42755, stack(0x000070000b528000,0x000070000b628000)]
+  0x00007fc514254e00 JavaThread "Sweeper thread" daemon [_thread_blocked, id=42243, stack(0x000070000b62b000,0x000070000b72b000)]
+  0x00007fc5130e4e00 JavaThread "Notification Thread" daemon [_thread_blocked, id=41731, stack(0x000070000b72e000,0x000070000b82e000)]
+  0x00007fc514255400 JavaThread "Common-Cleaner" daemon [_thread_blocked, id=22275, stack(0x000070000b934000,0x000070000ba34000)]
+  0x00007fc514259e00 JavaThread "Python Reference Queue" daemon [_thread_blocked_trans, id=40707, stack(0x000070000ba37000,0x000070000bb37000)]
+  0x00007fc514384600 JavaThread "SIGINT handler" daemon [_thread_blocked, id=15371, stack(0x000070000af93000,0x000070000b093000)]
+  0x00007fc51294d200 JavaThread "Thread-0" [_thread_blocked, id=40195, stack(0x000070000bd40000,0x000070000be40000)]
+
+Other Threads:
+  0x00007fc514dd8940 VMThread

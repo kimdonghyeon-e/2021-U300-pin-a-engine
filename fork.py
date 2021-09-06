@@ -80,9 +80,9 @@ lastsearch = lastsearchfile.readlines()
 last = int(lastsearch[0])
 print("저번서치끝 ", last)
 
-##DB연결
-db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
-cusor = db.cursor()
+# ##DB연결
+# db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
+# cusor = db.cursor()
 
 ##무한루프, 서치테이블에 추가된 데이터 있는지 검사
 while(True) :
@@ -90,7 +90,9 @@ while(True) :
 
     # print(last)
 
-    ##DB에 계속 쿼리 질의
+    ##DB연결 및 계속 쿼리 질의
+    db = pymysql.Connect(host='localhost', user='root', password='ROOTuser1234', database='fdtest')
+    cusor = db.cursor()
     query = "select * from search"
     cusor.execute(query)
     result = cusor.fetchall()
@@ -185,9 +187,11 @@ while(True) :
                 ##이제 이거를 어떻게 백엔드에주지,,?
 
                 ##자식프로세스가 추가적인 자식프로세스 열지못하도록 종료
+                db.close()
                 exit()
 
         ##마지막서치번호 최신화
+        db.close()
         wfile = open('/Users/gimdonghyeon/Documents/GitHub/2021-U300-pin-a-engine/lastsearch.txt', 'w')
         wfile.write(str(result[size-1][0]))
         last = int(result[size-1][0])
