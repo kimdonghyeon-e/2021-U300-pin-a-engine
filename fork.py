@@ -100,10 +100,11 @@ while(True) :
     print(result)
 
     size = len(result)
-    # print("현재서치끝 ", size)
+    print("저번서치끝 ", last)
+    print("현재서치끝 ", size)
 
     ##만약 서치테이블에 추가된 데이터 있으면
-    if size > last+1 :
+    if size > last :
 
         ##해당 추가된 데이터만큼 포크
         for forkloop in range(size - last) :
@@ -125,6 +126,7 @@ while(True) :
                 print(result[last+forkloop][2])
                 searchword = result[last+forkloop][2]
                 print("검색어 : ", searchword)
+                ###형태소분리 실행시 오류.(아직못고침)
                 malist = okt.pos(searchword, norm=True, stem=True)
                 print("분리된 형태소 : ", malist)
 
@@ -196,7 +198,7 @@ while(True) :
         wfile.write(str(result[size-1][0]))
         last = int(result[size-1][0])
         # print(str(result[size-1][0]))
-        print(last)
+        print("저번서치끝업데이트", last)
     # break
 
             
