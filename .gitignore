@@ -1,2 +1,3 @@
 newwiki.model.syn1neg.npy
 newwiki.model.wv.vectors.npy
+*.log

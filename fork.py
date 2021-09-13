@@ -126,6 +126,7 @@ while(True) :
                 ##mysql로 입력받은 검색어 저장 및 형태소분리
                 print(result[last+forkloop][2])
                 searchword = result[last+forkloop][2]
+                print(type(searchword))
                 print("검색어 : ", searchword)
                 ###형태소분리 실행시 오류.(아직못고침)
                 malist = okt.pos(searchword, norm=True, stem=True)
